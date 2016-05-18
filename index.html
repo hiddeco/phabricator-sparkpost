@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Phabricator-sparkpost by hiddeco</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Phabricator-sparkpost</h1>
+        <p>Enables Phabricator to send outbound email using SparkPost.</p>
+
+        <p class="view"><a href="https://github.com/hiddeco/phabricator-sparkpost">View the Project on GitHub <small>hiddeco/phabricator-sparkpost</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/hiddeco/phabricator-sparkpost/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/hiddeco/phabricator-sparkpost/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/hiddeco/phabricator-sparkpost">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="phabricator-sparkpost" class="anchor" href="#phabricator-sparkpost" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Phabricator SparkPost</h1>
+
+<p><a href="LICENSE.md"><img src="https://img.shields.io/badge/license-APLv2-brightgreen.svg?style=flat-square" alt="Software License"></a>
+<a href="https://scrutinizer-ci.com/g/hiddeco/phabricator-sparkpost"><img src="https://img.shields.io/scrutinizer/g/hiddeco/phabricator-sparkpost.svg?style=flat-square" alt="Quality Score"></a></p>
+
+<p>Phabricator Sparkpost is a mail adapter for <a href="https://phabricator.org">Phabricator</a> and enables the usage of <a href="https://sparkpost.com">SparkPost</a> for sending
+outbound email.</p>
+
+<blockquote>
+<p><strong>Note</strong></p>
+
+<p>The Phabricator upstream does officially not offer support with extension development. This means that upgrading your Phabricator instance
+while running this library can cause trouble because of upstream API changes. <strong>Always test your Phabricator instance after upgrading while
+using this library to ensure it still works like a new Tesla.</strong> If it does not work as expected, please open a <a href="https://github.com/hiddeco/phabricator-sparkpost/issues/new">new issue</a>.</p>
+</blockquote>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Installation of Phabricator SparkPost is fairly easy because it is build as a <a href="https://github.com/phacility/libphutil">libphutil</a> library.</p>
+
+<ol>
+<li>
+<p><code>git clone</code> Phabricator SparkPost next to your <code>arcanist</code>, <code>libphutil</code> and <code>phabricator</code> folders.</p>
+
+<div class="highlight highlight-source-shell"><pre>root@box:/$ ls -l
+drwxr-xr-x  8 root root 4096 May 17 18:20 arcanist
+drwxr-xr-x  9 root root 4096 May 17 18:20 libphutil
+drwxr-xr-x 11 root root 4096 May 18 06:05 phabricator
+root@box:/$ git clone https://github.com/hiddeco/phabricator-sparkpost.git</pre></div>
+</li>
+<li>
+<p>Link <code>phabricator-sparkpost</code> with your Phabricator instance. You do this by adding <code>phabricator-sparkpost</code> to your <code>load-libraries</code> config key. E.g.</p>
+
+<div class="highlight highlight-source-shell"><pre>root@box:phabricator/$ ./bin/config <span class="pl-c1">set</span> load-libraries <span class="pl-s"><span class="pl-pds">'</span>{"phabricator-sparkpost": "phabricator-sparkpost\/src\/"}<span class="pl-pds">'</span></span></pre></div>
+</li>
+<li>
+<p>Set your <code>sparkpost.api-key</code>.
+<em>Note: this API key needs Transmissions: Read/Write permissions.</em></p>
+
+<div class="highlight highlight-source-shell"><pre>root@box:phabricator/$ ./bin/config <span class="pl-c1">set</span> sparkpost.api-key <span class="pl-k">&lt;</span>key<span class="pl-k">&gt;</span></pre></div>
+</li>
+<li>
+<p>Configure Phabricator to use <code>PhabricatorMailImplementationSparkPostAdapter</code> as the mail adapter by setting <code>metamta.mail-adapter</code></p>
+
+<div class="highlight highlight-source-shell"><pre>root@box:phabricator/$ ./bin/config <span class="pl-c1">set</span> metamta.mail-adapter PhabricatorMailImplementationSparkPostAdapter</pre></div>
+</li>
+<li>
+<p>Test sending email.</p>
+
+<div class="highlight highlight-source-shell"><pre>root@box:phabricator/$ ./bin/mail send-test</pre></div>
+</li>
+</ol>
+
+<h2>
+<a id="change-log" class="anchor" href="#change-log" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Change log</h2>
+
+<p>Please see <a href="CHANGELOG.md">CHANGELOG</a> for more information what has changed recently.</p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Please see <a href="CONTRIBUTING.md">CONTRIBUTING</a> and <a href="CONDUCT.md">CONDUCT</a> for details.</p>
+
+<h2>
+<a id="security" class="anchor" href="#security" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Security</h2>
+
+<p>If you discover any security related issues, please email <a href="mailto:hello@hidde.co">hello@hidde.co</a> instead of using the issue tracker.</p>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h2>
+
+<ul>
+<li><a href="https://github.com/hiddeco">Hidde Beydals</a></li>
+<li><a href="../../contributors">All Contributors</a></li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>Licensed under the Apache License, Version 2.0. Please see <a href="LICENSE.md">License</a> for more information.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/hiddeco">hiddeco</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
