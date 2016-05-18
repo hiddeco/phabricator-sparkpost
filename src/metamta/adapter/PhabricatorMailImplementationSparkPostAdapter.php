@@ -177,7 +177,6 @@ final class PhabricatorMailImplementationSparkPostAdapter
 
         try {
             $response = phutil_json_decode($body);
-            var_dump($response);
         } catch (PhutilJSONParserException $e) {
             throw new PhutilProxyException(pht('Failed to JSON decode response.'), $e);
         }
